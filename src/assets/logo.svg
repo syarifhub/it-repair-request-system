@@ -1,0 +1,52 @@
+<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="120" fill="#ffffff" rx="10"/>
+  
+  <!-- Blue gradient background -->
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main shape -->
+  <rect x="10" y="10" width="180" height="100" fill="url(#blueGrad)" rx="8"/>
+  
+  <!-- Hotel icon -->
+  <g transform="translate(40, 25)">
+    <!-- Building -->
+    <rect x="0" y="20" width="40" height="50" fill="#ffffff" opacity="0.9"/>
+    <!-- Windows -->
+    <rect x="5" y="25" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="17" y="25" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="27" y="25" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="5" y="38" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="17" y="38" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="27" y="38" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="5" y="51" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="17" y="51" width="8" height="8" fill="#1e3a8a"/>
+    <rect x="27" y="51" width="8" height="8" fill="#1e3a8a"/>
+    <!-- Door -->
+    <rect x="12" y="58" width="16" height="12" fill="#1e3a8a"/>
+    <!-- Roof -->
+    <polygon points="20,10 0,20 40,20" fill="#ffffff" opacity="0.9"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="45" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    ANDAMAN
+  </text>
+  <text x="100" y="62" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    EMBRACE
+  </text>
+  <text x="100" y="79" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle" opacity="0.9">
+    PATONG
+  </text>
+  
+  <!-- IT Badge -->
+  <circle cx="165" cy="30" r="15" fill="#ffffff" opacity="0.9"/>
+  <text x="165" y="35" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">
+    IT
+  </text>
+</svg>
