@@ -9,6 +9,7 @@ export const TrackRequestPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [request, setRequest] = useState<any>(null);
+  const [cancelling, setCancelling] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +24,29 @@ export const TrackRequestPage = () => {
       setError(err.response?.data?.message || 'ไม่พบคำขอซ่อมนี้');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancel = async () => {
+    if (!request) return;
+
+    const confirmed = window.confirm(
+      'คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการแจ้งซ่อมนี้?\n\nหมายเหตุ: สามารถยกเลิกได้เฉพาะคำขอที่มีสถานะ "รอดำเนินการ" เท่านั้น'
+    );
+
+    if (!confirmed) return;
+
+    setCancelling(true);
+    setError('');
+
+    try {
+      const response = await api.post(`/repair-requests/${request._id}/cancel`);
+      setRequest(response.data.data);
+      alert('ยกเลิกการแจ้งซ่อมเรียบร้อยแล้ว');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'ไม่สามารถยกเลิกการแจ้งซ่อมได้');
+    } finally {
+      setCancelling(false);
     }
   };
 
@@ -148,15 +172,35 @@ export const TrackRequestPage = () => {
             marginBottom: '20px'
           }}>
             <h2 style={{ margin: 0 }}>{request.title}</h2>
-            <span style={{
-              padding: '6px 12px',
-              borderRadius: '20px',
-              backgroundColor: getStatusColor(request.status),
-              color: 'white',
-              fontWeight: 'bold'
-            }}>
-              {request.status}
-            </span>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <span style={{
+                padding: '6px 12px',
+                borderRadius: '20px',
+                backgroundColor: getStatusColor(request.status),
+                color: 'white',
+                fontWeight: 'bold'
+              }}>
+                {request.status}
+              </span>
+              {request.status === 'รอดำเนินการ' && (
+                <button
+                  onClick={handleCancel}
+                  disabled={cancelling}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: cancelling ? '#6c757d' : '#dc3545',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: cancelling ? 'not-allowed' : 'pointer',
+                    fontWeight: 'bold',
+                    fontSize: '14px'
+                  }}
+                >
+                  {cancelling ? 'กำลังยกเลิก...' : '❌ ยกเลิกการแจ้ง'}
+                </button>
+              )}
+            </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px' }}>
