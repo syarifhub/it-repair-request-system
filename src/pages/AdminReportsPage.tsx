@@ -111,7 +111,7 @@ export default function AdminReportsPage() {
       ) : stats && stats.totalRequests > 0 ? (
         <>
           {/* Summary Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '30px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px', marginBottom: '30px' }}>
             <div style={{ backgroundColor: '#3b82f6', color: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(59,130,246,0.3)' }}>
               <div style={{ fontSize: '16px', marginBottom: '10px', opacity: 0.9 }}>คำขอทั้งหมด</div>
               <div style={{ fontSize: '42px', fontWeight: 'bold' }}>{stats.totalRequests}</div>
@@ -130,6 +130,11 @@ export default function AdminReportsPage() {
             <div style={{ backgroundColor: '#10b981', color: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(16,185,129,0.3)' }}>
               <div style={{ fontSize: '16px', marginBottom: '10px', opacity: 0.9 }}>เสร็จสิ้น</div>
               <div style={{ fontSize: '42px', fontWeight: 'bold' }}>{stats.byStatus['เสร็จสิ้น'] || 0}</div>
+              <div style={{ fontSize: '14px', marginTop: '5px', opacity: 0.8 }}>รายการ</div>
+            </div>
+            <div style={{ backgroundColor: '#ef4444', color: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(239,68,68,0.3)' }}>
+              <div style={{ fontSize: '16px', marginBottom: '10px', opacity: 0.9 }}>ยกเลิก</div>
+              <div style={{ fontSize: '42px', fontWeight: 'bold' }}>{stats.byStatus['ยกเลิก'] || 0}</div>
               <div style={{ fontSize: '14px', marginTop: '5px', opacity: 0.8 }}>รายการ</div>
             </div>
           </div>
@@ -191,6 +196,28 @@ export default function AdminReportsPage() {
             </div>
           </div>
 
+          {/* Department-Equipment Breakdown */}
+          <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', marginBottom: '30px' }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', color: '#333', borderBottom: '3px solid #f59e0b', paddingBottom: '10px' }}>
+              🔧 สถิติแยกตามแผนกและอุปกรณ์
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+              {stats.byDepartmentEquipment && Object.entries(stats.byDepartmentEquipment).map(([dept, equipment]: [string, any]) => (
+                <div key={dept} style={{ padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid #e0e0e0' }}>
+                  <h3 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '12px', color: '#333' }}>{dept}</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {Object.entries(equipment).map(([type, count]: [string, any]) => (
+                      <div key={type} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px', backgroundColor: 'white', borderRadius: '4px' }}>
+                        <span style={{ fontSize: '14px', color: '#555' }}>{type}</span>
+                        <span style={{ fontSize: '15px', fontWeight: 'bold', color: '#f59e0b' }}>{count} ครั้ง</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Requests Table */}
           <div style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
             <div style={{ padding: '25px', borderBottom: '2px solid #f0f0f0' }}>
@@ -226,11 +253,13 @@ export default function AdminReportsPage() {
                           backgroundColor: 
                             request.status === 'เสร็จสิ้น' ? '#d1fae5' :
                             request.status === 'กำลังดำเนินการ' ? '#fef3c7' :
-                            request.status === 'รอดำเนินการ' ? '#dbeafe' : '#f3f4f6',
+                            request.status === 'รอดำเนินการ' ? '#dbeafe' :
+                            request.status === 'ยกเลิก' ? '#fee2e2' : '#f3f4f6',
                           color:
                             request.status === 'เสร็จสิ้น' ? '#065f46' :
                             request.status === 'กำลังดำเนินการ' ? '#92400e' :
-                            request.status === 'รอดำเนินการ' ? '#1e40af' : '#374151'
+                            request.status === 'รอดำเนินการ' ? '#1e40af' :
+                            request.status === 'ยกเลิก' ? '#991b1b' : '#374151'
                         }}>
                           {request.status}
                         </span>

@@ -43,6 +43,7 @@ export interface MonthlyStats {
   byDepartment: { [key: string]: number };
   byStatus: { [key: string]: number };
   byEquipmentType: { [key: string]: number };
+  byDepartmentEquipment: { [department: string]: { [equipment: string]: number } };
   totalRequests: number;
   month: number;
   year: number;

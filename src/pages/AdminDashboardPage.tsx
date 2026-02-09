@@ -144,7 +144,7 @@ export const AdminDashboardPage = () => {
         <>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
             gap: '20px',
             marginBottom: '30px'
           }}>
@@ -197,6 +197,19 @@ export const AdminDashboardPage = () => {
               <h3 style={{ margin: '0 0 10px 0' }}>เสร็จสิ้น</h3>
               <p style={{ fontSize: '32px', fontWeight: 'bold', margin: 0 }}>
                 {stats.byStatus['เสร็จสิ้น'] || 0}
+              </p>
+            </div>
+
+            <div style={{
+              padding: '20px',
+              backgroundColor: '#dc3545',
+              color: 'white',
+              borderRadius: '8px',
+              textAlign: 'center'
+            }}>
+              <h3 style={{ margin: '0 0 10px 0' }}>ยกเลิก</h3>
+              <p style={{ fontSize: '32px', fontWeight: 'bold', margin: 0 }}>
+                {stats.byStatus['ยกเลิก'] || 0}
               </p>
             </div>
           </div>
