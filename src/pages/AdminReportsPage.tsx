@@ -266,6 +266,9 @@ export default function AdminReportsPage() {
                       <td style={{ padding: '16px', fontSize: '15px', maxWidth: '300px' }}>{request.title}</td>
                       <td style={{ padding: '16px' }}>
                         <span style={{
+                          display: 'inline-block',
+                          minWidth: '120px',
+                          textAlign: 'center',
                           padding: '6px 14px',
                           borderRadius: '20px',
                           fontSize: '13px',
