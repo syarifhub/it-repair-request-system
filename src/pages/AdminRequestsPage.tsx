@@ -44,8 +44,19 @@ export const AdminRequestsPage = () => {
     }
   };
 
-  const handleQuickAction = async (requestId: string, action: 'accept' | 'cancel' | 'complete') => {
+  const handleQuickAction = async (requestId: string, action: 'accept' | 'cancel' | 'complete' | 'delete') => {
     try {
+      if (action === 'delete') {
+        // ยืนยันก่อนลบ
+        const confirmed = window.confirm('คุณแน่ใจหรือไม่ที่จะลบรายการนี้?\n\nการลบจะไม่สามารถกู้คืนได้');
+        if (!confirmed) return;
+
+        await api.delete(`/admin/repair-requests/${requestId}`);
+        alert('ลบรายการสำเร็จ!');
+        fetchRequests();
+        return;
+      }
+
       let status = '';
       let notes = '';
       
@@ -64,7 +75,7 @@ export const AdminRequestsPage = () => {
       alert('อัพเดทสำเร็จ!');
       fetchRequests();
     } catch (error: any) {
-      alert('เกิดข้อผิดพลาด: ' + (error.response?.data?.message || 'ไม่สามารถอัพเดทได้'));
+      alert('เกิดข้อผิดพลาด: ' + (error.response?.data?.message || 'ไม่สามารถดำเนินการได้'));
     }
   };
 
@@ -360,7 +371,25 @@ export const AdminRequestsPage = () => {
                             ✓ เสร็จสิ้น
                           </button>
                         )}
-                        {(request.status === 'เสร็จสิ้น' || request.status === 'ยกเลิก') && (
+                        {request.status === 'ยกเลิก' && (
+                          <button
+                            onClick={() => handleQuickAction(request._id, 'delete')}
+                            title="ลบรายการ"
+                            style={{
+                              padding: '6px 12px',
+                              backgroundColor: '#dc3545',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              fontSize: '14px',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            🗑️ ลบ
+                          </button>
+                        )}
+                        {request.status === 'เสร็จสิ้น' && (
                           <span style={{ color: '#6c757d', fontSize: '14px' }}>-</span>
                         )}
                       </div>
