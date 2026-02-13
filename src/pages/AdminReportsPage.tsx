@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getMonthlyStats, getMonthlyRequests, type MonthlyStats, type MonthlyRequest } from '../services/api';
 
 const THAI_MONTHS = [
@@ -7,6 +8,7 @@ const THAI_MONTHS = [
 ];
 
 export default function AdminReportsPage() {
+  const navigate = useNavigate();
   const now = new Date();
   const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState(now.getFullYear());
@@ -39,6 +41,24 @@ export default function AdminReportsPage() {
 
   return (
     <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '20px', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/admin/dashboard')}
+        style={{
+          marginBottom: '20px',
+          padding: '10px 20px',
+          backgroundColor: '#6c757d',
+          color: 'white',
+          border: 'none',
+          borderRadius: '8px',
+          cursor: 'pointer',
+          fontSize: '16px',
+          fontWeight: 'bold'
+        }}
+      >
+        ← กลับ Dashboard
+      </button>
+
       {/* Header */}
       <div style={{ marginBottom: '30px' }}>
         <h1 style={{ fontSize: '32px', fontWeight: 'bold', color: '#333', marginBottom: '10px' }}>📊 รายงานรายเดือน</h1>

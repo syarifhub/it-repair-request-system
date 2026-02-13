@@ -44,6 +44,30 @@ export const AdminRequestsPage = () => {
     }
   };
 
+  const handleQuickAction = async (requestId: string, action: 'accept' | 'cancel' | 'complete') => {
+    try {
+      let status = '';
+      let notes = '';
+      
+      if (action === 'accept') {
+        status = 'กำลังดำเนินการ';
+        notes = 'รับงานแล้ว';
+      } else if (action === 'cancel') {
+        status = 'ยกเลิก';
+        notes = 'ยกเลิกโดย Admin';
+      } else if (action === 'complete') {
+        status = 'เสร็จสิ้น';
+        notes = 'ดำเนินการเสร็จสิ้น';
+      }
+      
+      await api.patch(`/admin/repair-requests/${requestId}`, { status, notes });
+      alert('อัพเดทสำเร็จ!');
+      fetchRequests();
+    } catch (error: any) {
+      alert('เกิดข้อผิดพลาด: ' + (error.response?.data?.message || 'ไม่สามารถอัพเดทได้'));
+    }
+  };
+
   const handleUpdateRequest = async (requestId: string) => {
     try {
       await api.patch(`/admin/repair-requests/${requestId}`, updateData);
@@ -186,9 +210,8 @@ export const AdminRequestsPage = () => {
           <option value="Engineering">Engineering</option>
           <option value="Accounting">Accounting</option>
           <option value="Sales & Marketing">Sales & Marketing</option>
-          <option value="Security">Security</option>
-          <option value="IT">IT</option>
-          <option value="HR">HR</option>
+          <option value="Human Resources">Human Resources</option>
+          <option value="Reservation">Reservation</option>
           <option value="Other">Other</option>
         </select>
 
@@ -260,23 +283,82 @@ export const AdminRequestsPage = () => {
                       {new Date(request.createdAt).toLocaleDateString('th-TH')}
                     </td>
                     <td style={{ padding: '12px', textAlign: 'center' }}>
-                      <button
-                        onClick={() => {
-                          setSelectedRequest(request);
-                          setUpdateData({ status: request.status, notes: '' });
-                        }}
-                        style={{
-                          padding: '6px 12px',
-                          backgroundColor: '#007bff',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '14px'
-                        }}
-                      >
-                        แก้ไข
-                      </button>
+                      <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }}>
+                        {request.status === 'รอดำเนินการ' && (
+                          <>
+                            <button
+                              onClick={() => handleQuickAction(request._id, 'accept')}
+                              title="รับงาน"
+                              style={{
+                                padding: '6px 10px',
+                                backgroundColor: '#28a745',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '16px',
+                                fontWeight: 'bold'
+                              }}
+                            >
+                              ✓
+                            </button>
+                            <button
+                              onClick={() => handleQuickAction(request._id, 'cancel')}
+                              title="ยกเลิก"
+                              style={{
+                                padding: '6px 10px',
+                                backgroundColor: '#dc3545',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '16px',
+                                fontWeight: 'bold'
+                              }}
+                            >
+                              ✕
+                            </button>
+                            <button
+                              onClick={() => {
+                                setSelectedRequest(request);
+                                setUpdateData({ status: request.status, notes: '' });
+                              }}
+                              style={{
+                                padding: '6px 12px',
+                                backgroundColor: '#007bff',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '14px'
+                              }}
+                            >
+                              แก้ไข
+                            </button>
+                          </>
+                        )}
+                        {request.status === 'กำลังดำเนินการ' && (
+                          <button
+                            onClick={() => handleQuickAction(request._id, 'complete')}
+                            title="เสร็จสิ้น"
+                            style={{
+                              padding: '6px 12px',
+                              backgroundColor: '#28a745',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              fontSize: '14px',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            ✓ เสร็จสิ้น
+                          </button>
+                        )}
+                        {(request.status === 'เสร็จสิ้น' || request.status === 'ยกเลิก') && (
+                          <span style={{ color: '#6c757d', fontSize: '14px' }}>-</span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}

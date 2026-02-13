@@ -9,7 +9,7 @@ export const CreateRequestPage = () => {
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     equipmentType: 'Computer',
-    department: 'IT',
+    department: 'Housekeeping',
     title: '',
     problemDescription: '',
     reporterName: '',
@@ -24,9 +24,8 @@ export const CreateRequestPage = () => {
     'Engineering',
     'Accounting',
     'Sales & Marketing',
-    'Security',
-    'IT',
-    'HR',
+    'Human Resources',
+    'Reservation',
     'Other'
   ];
 
