@@ -95,10 +95,12 @@ export const AdminRequestsPage = () => {
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '20px'
+        alignItems: 'flex-start',
+        marginBottom: '20px',
+        flexWrap: 'wrap',
+        gap: '20px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
           {/* Logo */}
           <div style={{ 
             minHeight: '60px',
@@ -132,7 +134,7 @@ export const AdminRequestsPage = () => {
             </p>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           <button
             onClick={() => navigate('/admin/reports')}
             style={{

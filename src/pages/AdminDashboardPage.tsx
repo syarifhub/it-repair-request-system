@@ -53,12 +53,14 @@ export const AdminDashboardPage = () => {
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginBottom: '30px',
         paddingBottom: '20px',
-        borderBottom: '2px solid #ddd'
+        borderBottom: '2px solid #ddd',
+        flexWrap: 'wrap',
+        gap: '20px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
           {/* Logo */}
           <div style={{ 
             minHeight: '60px',
@@ -95,7 +97,7 @@ export const AdminDashboardPage = () => {
             </p>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           <button
             onClick={() => navigate('/admin/requests')}
             style={{
