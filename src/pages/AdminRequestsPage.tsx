@@ -271,7 +271,10 @@ export const AdminRequestsPage = () => {
                     <td style={{ padding: '12px' }}>{request.reporterName}</td>
                     <td style={{ padding: '12px' }}>
                       <span style={{
-                        padding: '4px 8px',
+                        display: 'inline-block',
+                        minWidth: '120px',
+                        textAlign: 'center',
+                        padding: '6px 12px',
                         borderRadius: '12px',
                         backgroundColor: getStatusColor(request.status),
                         color: 'white',
