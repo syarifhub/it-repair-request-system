@@ -422,7 +422,7 @@ export const AdminRequestsPage = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            🗑️ ลบ
+                            ❌ ลบ
                           </button>
                         )}
                         {request.status === 'เสร็จสิ้น' && (
