@@ -1,30 +1,43 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import logoImage from '../assets/logo.png';
 
 export const TrackRequestPage = () => {
   const navigate = useNavigate();
+  const { requestNumber } = useParams<{ requestNumber?: string }>();
   const [requestId, setRequestId] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [request, setRequest] = useState<any>(null);
   const [cancelling, setCancelling] = useState(false);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Auto-search if requestNumber is in URL
+  useEffect(() => {
+    if (requestNumber) {
+      setRequestId(requestNumber);
+      handleSearchWithId(requestNumber);
+    }
+  }, [requestNumber]);
+
+  const handleSearchWithId = async (id: string) => {
     setLoading(true);
     setError('');
     setRequest(null);
 
     try {
-      const response = await api.get(`/repair-requests/${requestId}`);
+      const response = await api.get(`/repair-requests/${id}`);
       setRequest(response.data.data);
     } catch (err: any) {
       setError(err.response?.data?.message || 'ไม่พบคำขอซ่อมนี้');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSearchWithId(requestId);
   };
 
   const handleCancel = async () => {
@@ -232,6 +245,19 @@ export const TrackRequestPage = () => {
               <strong>วันที่แจ้ง:</strong>
               <p style={{ margin: '5px 0' }}>
                 {new Date(request.createdAt).toLocaleString('th-TH')}
+              </p>
+            </div>
+            <div>
+              <strong>วันที่เสร็จสิ้น:</strong>
+              <p style={{ margin: '5px 0' }}>
+                {(() => {
+                  const completedHistory = request.statusHistory?.find(
+                    (h: any) => h.newStatus === 'เสร็จสิ้น'
+                  );
+                  return completedHistory?.changedAt
+                    ? new Date(completedHistory.changedAt).toLocaleString('th-TH')
+                    : '-';
+                })()}
               </p>
             </div>
           </div>

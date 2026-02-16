@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/create-request" element={<CreateRequestPage />} />
         <Route path="/track-request" element={<TrackRequestPage />} />
+        <Route path="/track/:requestNumber" element={<TrackRequestPage />} />
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route
           path="/admin/dashboard"
