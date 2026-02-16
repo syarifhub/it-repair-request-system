@@ -224,6 +224,24 @@ export const TrackRequestPage = () => {
               </p>
             </div>
             <div>
+              <strong>ประเภทอุปกรณ์:</strong>
+              <p style={{ margin: '5px 0' }}>{request.equipmentType}</p>
+            </div>
+            <div>
+              <strong>แผนก:</strong>
+              <p style={{ margin: '5px 0' }}>{request.department}</p>
+            </div>
+            <div>
+              <strong>ผู้แจ้ง:</strong>
+              <p style={{ margin: '5px 0' }}>{request.reporterName}</p>
+            </div>
+            {request.location && (
+              <div>
+                <strong>สถานที่:</strong>
+                <p style={{ margin: '5px 0' }}>{request.location}</p>
+              </div>
+            )}
+            <div>
               <strong>วันที่แจ้ง:</strong>
               <p style={{ margin: '5px 0' }}>
                 {new Date(request.createdAt).toLocaleString('th-TH')}
@@ -242,24 +260,6 @@ export const TrackRequestPage = () => {
                 })()}
               </p>
             </div>
-            <div>
-              <strong>ประเภทอุปกรณ์:</strong>
-              <p style={{ margin: '5px 0' }}>{request.equipmentType}</p>
-            </div>
-            <div>
-              <strong>แผนก:</strong>
-              <p style={{ margin: '5px 0' }}>{request.department}</p>
-            </div>
-            <div>
-              <strong>ผู้แจ้ง:</strong>
-              <p style={{ margin: '5px 0' }}>{request.reporterName}</p>
-            </div>
-            {request.location && (
-              <div>
-                <strong>สถานที่:</strong>
-                <p style={{ margin: '5px 0' }}>{request.location}</p>
-              </div>
-            )}
           </div>
 
           <div style={{ marginBottom: '20px' }}>

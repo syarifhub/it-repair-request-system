@@ -262,12 +262,12 @@ export const AdminRequestsPage = () => {
                 <tr style={{ backgroundColor: '#007bff', color: 'white' }}>
                   <th style={{ padding: '12px', textAlign: 'left' }}>รหัส</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>วันที่แจ้ง</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่เสร็จสิ้น</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>หัวข้อ</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>อุปกรณ์</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>แผนก</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>ผู้แจ้ง</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>สถานะ</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่เสร็จสิ้น</th>
                   <th style={{ padding: '12px', textAlign: 'center' }}>จัดการ</th>
                 </tr>
               </thead>
@@ -304,6 +304,17 @@ export const AdminRequestsPage = () => {
                           day: '2-digit'
                         })}
                       </td>
+                      <td style={{ padding: '12px', fontSize: '14px' }}>
+                        {completedDate ? (
+                          new Date(completedDate).toLocaleDateString('th-TH', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                          })
+                        ) : (
+                          '-'
+                        )}
+                      </td>
                       <td style={{ padding: '12px' }}>{request.title}</td>
                       <td style={{ padding: '12px' }}>{request.equipmentType}</td>
                       <td style={{ padding: '12px' }}>{request.department}</td>
@@ -322,17 +333,6 @@ export const AdminRequestsPage = () => {
                         }}>
                           {request.status}
                         </span>
-                      </td>
-                      <td style={{ padding: '12px', fontSize: '14px' }}>
-                        {completedDate ? (
-                          new Date(completedDate).toLocaleDateString('th-TH', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit'
-                          })
-                        ) : (
-                          '-'
-                        )}
                       </td>
                       <td style={{ padding: '12px', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }}>
