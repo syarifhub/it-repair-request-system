@@ -261,8 +261,8 @@ export const AdminRequestsPage = () => {
               <thead>
                 <tr style={{ backgroundColor: '#007bff', color: 'white' }}>
                   <th style={{ padding: '12px', textAlign: 'left' }}>รหัส</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่แจ้ง</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่เสร็จสิ้น</th>
+                  <th style={{ padding: '12px', textAlign: 'center' }}>วันที่แจ้ง</th>
+                  <th style={{ padding: '12px', textAlign: 'center' }}>วันที่เสร็จสิ้น</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>หัวข้อ</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>อุปกรณ์</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>แผนก</th>
@@ -297,14 +297,14 @@ export const AdminRequestsPage = () => {
                           {request.requestNumber}
                         </a>
                       </td>
-                      <td style={{ padding: '12px', fontSize: '14px' }}>
+                      <td style={{ padding: '12px', fontSize: '14px', textAlign: 'center' }}>
                         {new Date(request.createdAt).toLocaleDateString('th-TH', {
                           year: 'numeric',
                           month: '2-digit',
                           day: '2-digit'
                         })}
                       </td>
-                      <td style={{ padding: '12px', fontSize: '14px' }}>
+                      <td style={{ padding: '12px', fontSize: '14px', textAlign: 'center' }}>
                         {completedDate ? (
                           new Date(completedDate).toLocaleDateString('th-TH', {
                             year: 'numeric',
