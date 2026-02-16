@@ -116,6 +116,25 @@ export const HomePage = () => {
           </button>
 
           <button
+            onClick={() => window.open('https://github.com/syarifhub/it-repair-request-system/raw/main/คู่มือการใช้งาน-พนักงาน.pdf', '_blank')}
+            style={{
+              padding: '20px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              backgroundColor: '#17a2b8',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#117a8b'}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#17a2b8'}
+          >
+            📖 คู่มือการใช้งาน
+          </button>
+
+          <button
             onClick={() => navigate('/admin/login')}
             style={{
               padding: '20px',
