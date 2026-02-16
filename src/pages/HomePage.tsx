@@ -116,7 +116,7 @@ export const HomePage = () => {
           </button>
 
           <button
-            onClick={() => window.open('https://github.com/syarifhub/it-repair-request-system/raw/main/คู่มือการใช้งาน.pdf', '_blank')}
+            onClick={() => window.open('/คู่มือการใช้งาน.pdf', '_blank')}
             style={{
               padding: '20px',
               fontSize: '18px',
