@@ -116,7 +116,7 @@ export const HomePage = () => {
           </button>
 
           <button
-            onClick={() => window.open('/คู่มือการใช้งาน.pdf', '_blank')}
+            onClick={() => window.open('/คู่มือการใช้งานระบบแจ้งซ่อมอุปกรณ์ IT.pdf', '_blank')}
             style={{
               padding: '20px',
               fontSize: '18px',
