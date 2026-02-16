@@ -261,93 +261,129 @@ export const AdminRequestsPage = () => {
               <thead>
                 <tr style={{ backgroundColor: '#007bff', color: 'white' }}>
                   <th style={{ padding: '12px', textAlign: 'left' }}>รหัส</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่แจ้ง</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>หัวข้อ</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>อุปกรณ์</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>แผนก</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>ผู้แจ้ง</th>
                   <th style={{ padding: '12px', textAlign: 'left' }}>สถานะ</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>วันที่เสร็จสิ้น</th>
                   <th style={{ padding: '12px', textAlign: 'center' }}>จัดการ</th>
                 </tr>
               </thead>
               <tbody>
-                {requests.map((request) => (
-                  <tr key={request._id} style={{ borderBottom: '1px solid #ddd' }}>
-                    <td style={{ padding: '12px', fontSize: '14px', fontWeight: 'bold', color: '#007bff' }}>
-                      {request.requestNumber}
-                    </td>
-                    <td style={{ padding: '12px' }}>{request.title}</td>
-                    <td style={{ padding: '12px' }}>{request.equipmentType}</td>
-                    <td style={{ padding: '12px' }}>{request.department}</td>
-                    <td style={{ padding: '12px' }}>{request.reporterName}</td>
-                    <td style={{ padding: '12px' }}>
-                      <span style={{
-                        display: 'inline-block',
-                        minWidth: '120px',
-                        textAlign: 'center',
-                        padding: '6px 12px',
-                        borderRadius: '12px',
-                        backgroundColor: getStatusColor(request.status),
-                        color: 'white',
-                        fontSize: '12px',
-                        fontWeight: 'bold'
-                      }}>
-                        {request.status}
-                      </span>
-                    </td>
-                    <td style={{ padding: '12px', fontSize: '14px' }}>
-                      {new Date(request.createdAt).toLocaleDateString('th-TH')}
-                    </td>
-                    <td style={{ padding: '12px', textAlign: 'center' }}>
-                      <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }}>
-                        {request.status === 'รอดำเนินการ' && (
-                          <>
-                            <button
-                              onClick={() => handleQuickAction(request._id, 'accept')}
-                              title="รับงาน"
-                              style={{
-                                padding: '6px 10px',
-                                backgroundColor: '#28a745',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '16px',
-                                fontWeight: 'bold'
-                              }}
-                            >
-                              ✓
-                            </button>
-                            <button
-                              onClick={() => handleQuickAction(request._id, 'cancel')}
-                              title="ยกเลิก"
-                              style={{
-                                padding: '6px 10px',
-                                backgroundColor: '#dc3545',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '16px',
-                                fontWeight: 'bold'
-                              }}
-                            >
-                              ✕
-                            </button>
-                            <button
-                              onClick={() => {
-                                setSelectedRequest(request);
-                                setUpdateData({ status: request.status, notes: '' });
-                              }}
-                              style={{
-                                padding: '6px 12px',
-                                backgroundColor: '#007bff',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                fontSize: '14px'
-                              }}
+                {requests.map((request) => {
+                  // หาวันที่เสร็จสิ้น จาก statusHistory
+                  const completedHistory = request.statusHistory?.find(
+                    (h: any) => h.newStatus === 'เสร็จสิ้น'
+                  );
+                  const completedDate = completedHistory?.changedAt;
+
+                  return (
+                    <tr key={request._id} style={{ borderBottom: '1px solid #ddd' }}>
+                      <td style={{ padding: '12px' }}>
+                        <a
+                          href={`/track/${request.requestNumber}`}
+                          style={{
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            color: '#007bff',
+                            textDecoration: 'none',
+                            cursor: 'pointer'
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                          {request.requestNumber}
+                        </a>
+                      </td>
+                      <td style={{ padding: '12px', fontSize: '14px' }}>
+                        {new Date(request.createdAt).toLocaleDateString('th-TH', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit'
+                        })}
+                      </td>
+                      <td style={{ padding: '12px' }}>{request.title}</td>
+                      <td style={{ padding: '12px' }}>{request.equipmentType}</td>
+                      <td style={{ padding: '12px' }}>{request.department}</td>
+                      <td style={{ padding: '12px' }}>{request.reporterName}</td>
+                      <td style={{ padding: '12px' }}>
+                        <span style={{
+                          display: 'inline-block',
+                          minWidth: '120px',
+                          textAlign: 'center',
+                          padding: '6px 12px',
+                          borderRadius: '12px',
+                          backgroundColor: getStatusColor(request.status),
+                          color: 'white',
+                          fontSize: '12px',
+                          fontWeight: 'bold'
+                        }}>
+                          {request.status}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px', fontSize: '14px' }}>
+                        {completedDate ? (
+                          new Date(completedDate).toLocaleDateString('th-TH', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                          })
+                        ) : (
+                          '-'
+                        )}
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }}>
+                          {request.status === 'รอดำเนินการ' && (
+                            <>
+                              <button
+                                onClick={() => handleQuickAction(request._id, 'accept')}
+                                title="รับงาน"
+                                style={{
+                                  padding: '6px 10px',
+                                  backgroundColor: '#28a745',
+                                  color: 'white',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  fontSize: '16px',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                ✓
+                              </button>
+                              <button
+                                onClick={() => handleQuickAction(request._id, 'cancel')}
+                                title="ยกเลิก"
+                                style={{
+                                  padding: '6px 10px',
+                                  backgroundColor: '#dc3545',
+                                  color: 'white',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  fontSize: '16px',
+                                  fontWeight: 'bold'
+                                }}
+                              >
+                                ✕
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setSelectedRequest(request);
+                                  setUpdateData({ status: request.status, notes: '' });
+                                }}
+                                style={{
+                                  padding: '6px 12px',
+                                  backgroundColor: '#007bff',
+                                  color: 'white',
+                                  border: 'none',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  fontSize: '14px'
+                                }}
                             >
                               แก้ไข
                             </button>
@@ -395,7 +431,8 @@ export const AdminRequestsPage = () => {
                       </div>
                     </td>
                   </tr>
-                ))}
+                );
+                })}
               </tbody>
             </table>
           </div>
