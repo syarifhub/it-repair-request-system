@@ -47,9 +47,9 @@ const MonthlyRequestsTable: React.FC<MonthlyRequestsTableProps> = ({
       return '-';
     }
     const completedEntry = request.statusHistory.find(
-      (entry: any) => entry.status === 'เสร็จสิ้น'
+      (entry: any) => entry.newStatus === 'เสร็จสิ้น'
     );
-    return completedEntry ? formatDate(completedEntry.timestamp) : '-';
+    return completedEntry ? formatDate(completedEntry.changedAt) : '-';
   };
 
   if (requests.length === 0) {
