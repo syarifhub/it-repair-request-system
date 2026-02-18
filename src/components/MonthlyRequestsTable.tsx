@@ -46,6 +46,16 @@ const MonthlyRequestsTable: React.FC<MonthlyRequestsTableProps> = ({
     });
   };
 
+  const getCompletionDate = (request: MonthlyRequest) => {
+    if (!request.statusHistory || request.statusHistory.length === 0) {
+      return '-';
+    }
+    const completedEntry = request.statusHistory.find(
+      (entry: any) => entry.status === 'เสร็จสิ้น'
+    );
+    return completedEntry ? formatDate(completedEntry.timestamp) : '-';
+  };
+
   if (requests.length === 0) {
     return (
       <div className="bg-white p-6 rounded-lg shadow">
@@ -71,6 +81,15 @@ const MonthlyRequestsTable: React.FC<MonthlyRequestsTableProps> = ({
                 เลขคำขอ {getSortIcon('requestNumber')}
               </th>
               <th
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => onSort('createdAt')}
+              >
+                วันที่แจ้ง {getSortIcon('createdAt')}
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                วันที่เสร็จสิ้น
+              </th>
+              <th
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 onClick={() => onSort('department')}
               >
@@ -91,23 +110,31 @@ const MonthlyRequestsTable: React.FC<MonthlyRequestsTableProps> = ({
               >
                 สถานะ {getSortIcon('status')}
               </th>
-              <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => onSort('createdAt')}
-              >
-                วันที่สร้าง {getSortIcon('createdAt')}
-              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {requests.map((request) => (
               <tr
                 key={request._id}
-                onClick={() => handleRowClick(request.requestNumber)}
-                className="hover:bg-gray-50 cursor-pointer"
+                className="hover:bg-gray-50"
               >
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
-                  {request.requestNumber}
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <a
+                    href={`/track/${request.requestNumber}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(`/track/${request.requestNumber}`);
+                    }}
+                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    {request.requestNumber}
+                  </a>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                  {formatDate(request.createdAt)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                  {getCompletionDate(request)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {request.department}
@@ -132,9 +159,6 @@ const MonthlyRequestsTable: React.FC<MonthlyRequestsTableProps> = ({
                   >
                     {request.status}
                   </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {formatDate(request.createdAt)}
                 </td>
               </tr>
             ))}
