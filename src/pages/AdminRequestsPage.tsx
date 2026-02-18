@@ -176,6 +176,86 @@ export const AdminRequestsPage = () => {
         </div>
       </div>
 
+      {/* Summary Cards */}
+      {!loading && requests.length > 0 && (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+          gap: '15px',
+          marginBottom: '20px'
+        }}>
+          <div style={{
+            padding: '15px',
+            backgroundColor: '#007bff',
+            color: 'white',
+            borderRadius: '8px',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: '16px' }}>ทั้งหมด</h3>
+            <p style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
+              {pagination?.total || 0}
+            </p>
+            <p style={{ fontSize: '12px', margin: '5px 0 0 0', opacity: 0.9 }}>รายการ</p>
+          </div>
+
+          <div style={{
+            padding: '15px',
+            backgroundColor: '#ffc107',
+            color: 'white',
+            borderRadius: '8px',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: '16px' }}>รอดำเนินการ</h3>
+            <p style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
+              {requests.filter(r => r.status === 'รอดำเนินการ').length}
+            </p>
+            <p style={{ fontSize: '12px', margin: '5px 0 0 0', opacity: 0.9 }}>รายการ</p>
+          </div>
+
+          <div style={{
+            padding: '15px',
+            backgroundColor: '#17a2b8',
+            color: 'white',
+            borderRadius: '8px',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: '16px' }}>กำลังดำเนินการ</h3>
+            <p style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
+              {requests.filter(r => r.status === 'กำลังดำเนินการ').length}
+            </p>
+            <p style={{ fontSize: '12px', margin: '5px 0 0 0', opacity: 0.9 }}>รายการ</p>
+          </div>
+
+          <div style={{
+            padding: '15px',
+            backgroundColor: '#28a745',
+            color: 'white',
+            borderRadius: '8px',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: '16px' }}>เสร็จสิ้น</h3>
+            <p style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
+              {requests.filter(r => r.status === 'เสร็จสิ้น').length}
+            </p>
+            <p style={{ fontSize: '12px', margin: '5px 0 0 0', opacity: 0.9 }}>รายการ</p>
+          </div>
+
+          <div style={{
+            padding: '15px',
+            backgroundColor: '#dc3545',
+            color: 'white',
+            borderRadius: '8px',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ margin: '0 0 5px 0', fontSize: '16px' }}>ยกเลิก</h3>
+            <p style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }}>
+              {requests.filter(r => r.status === 'ยกเลิก').length}
+            </p>
+            <p style={{ fontSize: '12px', margin: '5px 0 0 0', opacity: 0.9 }}>รายการ</p>
+          </div>
+        </div>
+      )}
+
       {/* Filters */}
       <div style={{
         display: 'grid',
