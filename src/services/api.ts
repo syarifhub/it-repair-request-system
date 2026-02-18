@@ -62,10 +62,11 @@ export interface MonthlyRequest {
     username: string;
   };
   statusHistory?: Array<{
-    status: string;
-    timestamp: string;
-    updatedBy?: string;
+    oldStatus?: string;
+    newStatus: string;
+    changedBy?: string;
     notes?: string;
+    changedAt: string;
   }>;
 }
 

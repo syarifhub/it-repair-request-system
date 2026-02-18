@@ -259,9 +259,9 @@ export default function AdminReportsPage() {
                 <tbody>
                   {requests.map((request) => {
                     const completedHistory = request.statusHistory?.find(
-                      (h: any) => h.status === 'เสร็จสิ้น'
+                      (h: any) => h.newStatus === 'เสร็จสิ้น'
                     );
-                    const completedDate = completedHistory?.timestamp;
+                    const completedDate = completedHistory?.changedAt;
 
                     return (
                     <tr key={request._id} style={{ borderBottom: '1px solid #f0f0f0' }}>
