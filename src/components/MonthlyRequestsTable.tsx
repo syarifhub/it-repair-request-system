@@ -26,10 +26,6 @@ const MonthlyRequestsTable: React.FC<MonthlyRequestsTableProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleRowClick = (requestNumber: string) => {
-    navigate(`/admin/requests/${requestNumber}`);
-  };
-
   const getSortIcon = (field: string) => {
     if (sortBy !== field) return '↕️';
     return sortOrder === 'asc' ? '↑' : '↓';

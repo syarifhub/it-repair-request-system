@@ -61,6 +61,12 @@ export interface MonthlyRequest {
     fullName: string;
     username: string;
   };
+  statusHistory?: Array<{
+    status: string;
+    timestamp: string;
+    updatedBy?: string;
+    notes?: string;
+  }>;
 }
 
 export interface MonthlyRequestsResponse {
