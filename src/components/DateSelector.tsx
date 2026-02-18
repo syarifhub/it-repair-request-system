@@ -13,13 +13,14 @@ const DateSelector: React.FC<DateSelectorProps> = ({ selectedDate, onDateChange 
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
-      padding: '15px',
+      padding: '10px 15px',
       backgroundColor: 'white',
       borderRadius: '8px',
       border: '2px solid #4facb8',
-      marginBottom: '20px'
+      marginBottom: '20px',
+      width: 'fit-content'
     }}>
-      <label style={{ fontWeight: 'bold', color: '#2d3748' }}>
+      <label style={{ fontWeight: 'bold', color: '#2d3748', whiteSpace: 'nowrap' }}>
         📅 เลือกวันที่:
       </label>
       <input
@@ -45,7 +46,8 @@ const DateSelector: React.FC<DateSelectorProps> = ({ selectedDate, onDateChange 
           border: 'none',
           borderRadius: '4px',
           cursor: 'pointer',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          whiteSpace: 'nowrap'
         }}
       >
         วันนี้
