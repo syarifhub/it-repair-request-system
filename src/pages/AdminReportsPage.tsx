@@ -107,8 +107,8 @@ export default function AdminReportsPage() {
                 cursor: 'pointer'
               }}
             >
-              {Array.from({ length: 10 }, (_, i) => 2569 + i).map(year => (
-                <option key={year} value={year - 543}>{year}</option>
+              {Array.from({ length: new Date().getFullYear() - 2025 }, (_, i) => 2026 + i).map(year => (
+                <option key={year} value={year}>{year + 543}</option>
               ))}
             </select>
           </div>
