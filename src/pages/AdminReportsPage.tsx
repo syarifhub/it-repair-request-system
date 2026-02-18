@@ -248,18 +248,50 @@ export default function AdminReportsPage() {
                 <thead>
                   <tr style={{ backgroundColor: '#f8f9fa' }}>
                     <th style={{ padding: '16px', textAlign: 'left', fontWeight: '600', fontSize: '14px', color: '#666' }}>เลขคำขอ</th>
+                    <th style={{ padding: '16px', textAlign: 'center', fontWeight: '600', fontSize: '14px', color: '#666' }}>วันที่แจ้ง</th>
+                    <th style={{ padding: '16px', textAlign: 'center', fontWeight: '600', fontSize: '14px', color: '#666' }}>วันที่เสร็จสิ้น</th>
                     <th style={{ padding: '16px', textAlign: 'left', fontWeight: '600', fontSize: '14px', color: '#666' }}>แผนก</th>
                     <th style={{ padding: '16px', textAlign: 'left', fontWeight: '600', fontSize: '14px', color: '#666' }}>อุปกรณ์</th>
                     <th style={{ padding: '16px', textAlign: 'left', fontWeight: '600', fontSize: '14px', color: '#666' }}>หัวข้อ</th>
                     <th style={{ padding: '16px', textAlign: 'left', fontWeight: '600', fontSize: '14px', color: '#666' }}>สถานะ</th>
-                    <th style={{ padding: '16px', textAlign: 'left', fontWeight: '600', fontSize: '14px', color: '#666' }}>วันที่</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {requests.map((request) => (
+                  {requests.map((request) => {
+                    const completedHistory = request.statusHistory?.find(
+                      (h: any) => h.status === 'เสร็จสิ้น'
+                    );
+                    const completedDate = completedHistory?.timestamp;
+
+                    return (
                     <tr key={request._id} style={{ borderBottom: '1px solid #f0f0f0' }}>
                       <td style={{ padding: '16px' }}>
-                        <span style={{ color: '#3b82f6', fontWeight: 'bold', fontSize: '15px' }}>{request.requestNumber}</span>
+                        <a
+                          href={`/track/${request.requestNumber}`}
+                          style={{ color: '#3b82f6', fontWeight: 'bold', fontSize: '15px', textDecoration: 'none', cursor: 'pointer' }}
+                          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                          {request.requestNumber}
+                        </a>
+                      </td>
+                      <td style={{ padding: '16px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                        {new Date(request.createdAt).toLocaleDateString('th-TH', { 
+                          year: 'numeric', 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
+                      </td>
+                      <td style={{ padding: '16px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                        {completedDate ? (
+                          new Date(completedDate).toLocaleDateString('th-TH', { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric' 
+                          })
+                        ) : (
+                          '-'
+                        )}
                       </td>
                       <td style={{ padding: '16px', fontSize: '15px' }}>{request.department}</td>
                       <td style={{ padding: '16px', fontSize: '15px' }}>{request.equipmentType}</td>
@@ -287,15 +319,9 @@ export default function AdminReportsPage() {
                           {request.status}
                         </span>
                       </td>
-                      <td style={{ padding: '16px', fontSize: '14px', color: '#666' }}>
-                        {new Date(request.createdAt).toLocaleDateString('th-TH', { 
-                          year: 'numeric', 
-                          month: 'short', 
-                          day: 'numeric' 
-                        })}
-                      </td>
                     </tr>
-                  ))}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
