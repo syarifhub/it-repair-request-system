@@ -274,7 +274,7 @@ export const AdminRequestsPage = () => {
           style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
         >
           {Array.from({ length: new Date().getFullYear() - 2025 }, (_, i) => 2026 + i).map(year => (
-            <option key={year} value={year}>ปี {year + 543}</option>
+            <option key={year} value={year}>{year + 543}</option>
           ))}
         </select>
 
