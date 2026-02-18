@@ -62,7 +62,6 @@ const DateSelector: React.FC<DateSelectorProps> = ({ selectedDate, onDateChange 
       padding: '15px',
       backgroundColor: 'white',
       borderRadius: '8px',
-      border: '2px solid #4facb8',
       marginBottom: '20px',
       flexWrap: 'wrap'
     }}>
