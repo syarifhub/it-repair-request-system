@@ -2,30 +2,42 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import logoImage from '../assets/logo.png';
+import DateSelector from '../components/DateSelector';
 
 export const AdminDashboardPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any>(null);
   const [adminUser, setAdminUser] = useState<any>(null);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split('T')[0]
+  );
 
   useEffect(() => {
     const user = localStorage.getItem('adminUser');
     if (user) {
       setAdminUser(JSON.parse(user));
     }
-    fetchStats();
   }, []);
+
+  useEffect(() => {
+    fetchStats();
+  }, [selectedDate]);
 
   const fetchStats = async () => {
     try {
-      const response = await api.get('/admin/dashboard');
+      setLoading(true);
+      const response = await api.get(`/admin/dashboard/daily?date=${selectedDate}`);
       setStats(response.data.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDateChange = (date: string) => {
+    setSelectedDate(date);
   };
 
   const handleLogout = async () => {
@@ -85,7 +97,7 @@ export const AdminDashboardPage = () => {
             />
           </div>
           <div>
-            <h1 style={{ margin: 0, fontSize: '28px', color: '#2d3748' }}>📊 Dashboard</h1>
+            <h1 style={{ margin: 0, fontSize: '28px', color: '#2d3748' }}>📊 Dashboard (รายวัน)</h1>
             <p style={{ margin: '5px 0', color: '#4a5568', fontSize: '16px', fontWeight: 'bold' }}>
               Andaman Embrace Patong
             </p>
@@ -141,6 +153,8 @@ export const AdminDashboardPage = () => {
           </button>
         </div>
       </div>
+
+      <DateSelector selectedDate={selectedDate} onDateChange={handleDateChange} />
 
       {stats && (
         <>
