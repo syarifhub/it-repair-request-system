@@ -12,6 +12,7 @@ export const AdminRequestsPage = () => {
     status: '',
     equipmentType: '',
     department: '',
+    year: new Date().getFullYear(),
     page: 1
   });
   const [selectedRequest, setSelectedRequest] = useState<any>(null);
@@ -31,6 +32,7 @@ export const AdminRequestsPage = () => {
       if (filters.status) params.append('status', filters.status);
       if (filters.equipmentType) params.append('equipmentType', filters.equipmentType);
       if (filters.department) params.append('department', filters.department);
+      if (filters.year) params.append('year', filters.year.toString());
       params.append('page', filters.page.toString());
       params.append('limit', '10');
 
@@ -267,6 +269,16 @@ export const AdminRequestsPage = () => {
         borderRadius: '8px'
       }}>
         <select
+          value={filters.year}
+          onChange={(e) => setFilters({ ...filters, year: parseInt(e.target.value), page: 1 })}
+          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+        >
+          {Array.from({ length: new Date().getFullYear() - 2025 }, (_, i) => 2026 + i).map(year => (
+            <option key={year} value={year}>ปี {year + 543}</option>
+          ))}
+        </select>
+
+        <select
           value={filters.status}
           onChange={(e) => setFilters({ ...filters, status: e.target.value, page: 1 })}
           style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
@@ -309,7 +321,7 @@ export const AdminRequestsPage = () => {
         </select>
 
         <button
-          onClick={() => setFilters({ status: '', equipmentType: '', department: '', page: 1 })}
+          onClick={() => setFilters({ status: '', equipmentType: '', department: '', year: new Date().getFullYear(), page: 1 })}
           style={{
             padding: '8px',
             backgroundColor: '#dc3545',
