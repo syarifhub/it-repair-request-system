@@ -8,17 +8,9 @@ export const AdminDashboardPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any>(null);
-  const [adminUser, setAdminUser] = useState<any>(null);
   const [selectedDate, setSelectedDate] = useState<string>(
     new Date().toISOString().split('T')[0]
   );
-
-  useEffect(() => {
-    const user = localStorage.getItem('adminUser');
-    if (user) {
-      setAdminUser(JSON.parse(user));
-    }
-  }, []);
 
   useEffect(() => {
     fetchStats();
