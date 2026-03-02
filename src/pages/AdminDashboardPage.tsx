@@ -104,9 +104,6 @@ export const AdminDashboardPage = () => {
             <p style={{ margin: '5px 0', color: '#718096', fontSize: '14px' }}>
               IT Repair Request System
             </p>
-            <p style={{ margin: '5px 0', color: '#666' }}>
-              ยินดีต้อนรับ, {adminUser?.fullName || 'Admin'}
-            </p>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
